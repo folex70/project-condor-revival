@@ -14,23 +14,48 @@ public class gameManager : MonoBehaviour {
 	public Text num1Text;
 	public Text num2Text;
 	public Text numResultText;
-	public bool gameOver;
+    public Text countAcertosText;
+    public Text countErrosText;
+    public bool gameOver;
+    public int countAcertos;
+    public int countErros;
+    AudioSource audio;
+    public AudioClip AudioRight;
+    public AudioClip AudioWrong;
+    public GameObject resultBar;
+    public GameObject buttonsGroup;
+    public GameObject postGameButtonsGroup;
 
 
-
-	// Use this for initialization
-	void Start () {
-		timeLeft = 99;
-		gameOver = false;
+    // Use this for initialization
+    void Start ()
+    {
+        gameOver = false;
+        audio = GetComponent<AudioSource>();
+        resultBar = GameObject.FindGameObjectWithTag("resultBar");
+        buttonsGroup = GameObject.FindGameObjectWithTag("buttonsGroup");
+        postGameButtonsGroup = GameObject.FindGameObjectWithTag("postGameButtonsGroup");
+        resultBar.SetActive(false);
+        postGameButtonsGroup.SetActive(false);
+        timeLeft = 99;
+        countAcertos = 0;
+        countErros = 0;
 		Randomize ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (!gameOver) {
+	void Update ()
+    {
+		if (!gameOver)
+        {
 			timeLeft -= Time.deltaTime;
 			timeText.text = ""+timeLeft;
-			if(timeLeft < 0){
+            if (timeLeft < 10)
+            {
+                timeText.color = Color.red;
+            }
+            if (timeLeft < 0)
+            {
 				GameOver();
 			}
 		}
@@ -39,7 +64,6 @@ public class gameManager : MonoBehaviour {
 
 	public void Randomize()
 	{
-		//		randomValueType = Random.Range(3, 5);
 		num1 = Random.Range (0, 99);
 		num2 = Random.Range (1, 99);
 		signal = Random.Range (1, 4);
@@ -66,30 +90,86 @@ public class gameManager : MonoBehaviour {
 
 	public void GameOver()
 	{
-		gameOver = true;
-	}
+        resultBar.SetActive(true);
+        postGameButtonsGroup.SetActive(true);
+        buttonsGroup.SetActive(false);
+        gameOver = true;
+        countAcertosText.text = "="+countAcertos;
+        countErrosText.text = "="+countErros;
+    }
 
 	public void clickMais()
 	{
 		playerSignal = 1;
+        if (playerSignal == signal)
+        {
+            countAcertos += 1;
+            audio.PlayOneShot(AudioRight, 0.7F);
+        }
+        else
+        {
+            audio.PlayOneShot(AudioWrong, 0.7F);
+            countErros += 1;
+        }
 		Randomize ();
 	}
 
 	public void clickMenos()
 	{
 		playerSignal = 2;
-		Randomize ();
+        if (playerSignal == signal)
+        {
+            countAcertos += 1;
+            audio.PlayOneShot(AudioRight, 0.7F);
+        }
+        else
+        {
+            audio.PlayOneShot(AudioWrong, 0.7F);
+            countErros += 1;
+        }
+        Randomize ();
 	}
 
 	public void clickMult()
 	{
 		playerSignal = 3;
-		Randomize ();
+        if (playerSignal == signal)
+        {
+            countAcertos += 1;
+            audio.PlayOneShot(AudioRight, 0.7F);
+        }
+        else
+        {
+            audio.PlayOneShot(AudioWrong, 0.7F);
+            countErros += 1;
+        }
+        Randomize ();
 	}
 
 	public void clickDiv()
 	{
 		playerSignal = 4;
-		Randomize ();
+        if (playerSignal == signal)
+        {
+            countAcertos += 1;
+            audio.PlayOneShot(AudioRight, 0.7F);
+        }
+        else
+        {
+            audio.PlayOneShot(AudioWrong, 0.7F);
+            countErros += 1;
+        }
+        Randomize ();
 	}
+
+    public void reloadLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public void exit()
+    {
+        Application.Quit();
+    }
+
 }
