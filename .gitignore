@@ -1,0 +1,4 @@
+*.log
+*.info
+project-condor-revival/Library/
+project-condor-revival/Temp/
