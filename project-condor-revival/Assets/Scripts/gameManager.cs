@@ -37,7 +37,7 @@ public class gameManager : MonoBehaviour {
         postGameButtonsGroup = GameObject.FindGameObjectWithTag("postGameButtonsGroup");
         resultBar.SetActive(false);
         postGameButtonsGroup.SetActive(false);
-        timeLeft = 99;
+        timeLeft = 60;
         countAcertos = 0;
         countErros = 0;
 		Randomize ();
@@ -66,7 +66,8 @@ public class gameManager : MonoBehaviour {
 	{
 		num1 = Random.Range (0, 99);
 		num2 = Random.Range (1, 99);
-		signal = Random.Range (1, 4);
+		signal = Random.Range (1, 5);
+
 		if (signal == 1) 
 		{
 			numResult = num1 + num2;
